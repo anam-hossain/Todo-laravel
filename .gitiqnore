@@ -1,0 +1,27 @@
+# IDE specific
+.idea/
+ide_helper.php
+
+# Vagrant files
+.vagrant/
+
+# Laravel specific
+/app/storage/*
+/app/database/*.sqlite
+/bootstrap/compiled.php
+
+# Composer specific
+/vendor
+composer.phar
+
+# Vagrant
+
+/.vagrant
+/xhprof
+
+# Mac specific
+.DS_Store
+Thumbs.db
+
+# Ctags
+.tags
