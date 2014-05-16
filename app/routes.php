@@ -45,6 +45,7 @@ Route::get('/', ['as' => 'home', 'uses' => 'TodosController@index']);
 
 //Route::resource('/', 'TodosController');
 
+Route::post('todos', array('as' => 'todos.store', 'uses' => 'TodosController@store'));
 Route::delete('todos/{id}', array('as' => 'todos.destroy', 'uses' => 'TodosController@destroy'));
 Route::get('todo-laravel/{todoLarvel}', array('uses' => 'TodosController@todoBind'));
 Route::get('todo/{title}', array('uses' => 'TodosController@todoBind'));
