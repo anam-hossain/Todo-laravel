@@ -4,7 +4,7 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.0.*",
+		"laravel/framework": "4.1.*",
 		"jenssegers/mongodb": "*",
 		"way/generators": "dev-master"
 	},
@@ -20,6 +20,11 @@
 		"psr-0": {
 			"Todo" : "app/"
 		}
+	},
+	"require-dev": {
+
+	"phpunit/phpunit": "3.7.27"
+
 	},
 	"scripts": {
 		"post-install-cmd": [

@@ -22,17 +22,26 @@ class TodosController extends BaseController
 	public function index()
 	{
 		
+		//dd(Carbon::now()->subMonth());
 		$title = "Todo Laravel - MongoDB";
 
 		$todos = $this->todo->getAll();
 
+		
+		//$todos->forget(2);
+		// $todos= $todos->find(6);
+		// dd($todos);
 		// dd(DB::connection()->getName());
-		dd(DB::connection()->getConfig());
-
-
+		//dd(DB::connection()->getConfig());
 
 
 		return View::make('index', compact('title', 'todos'));
+	}
+
+	public function show($id)
+	{
+
+		dd("executed");
 	}
 
 	public function store()
@@ -48,5 +57,10 @@ class TodosController extends BaseController
 		$todo = $this->todo->destroy($id);
 
 		return Redirect::route('todos.index');
+	}
+
+	public function todoBind(Todo $todo)
+	{
+		dd($todo);
 	}
 }

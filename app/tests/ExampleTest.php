@@ -9,9 +9,20 @@ class ExampleTest extends TestCase {
 	 */
 	public function testBasicExample()
 	{
-		$crawler = $this->client->request('GET', '/');
+		// $this->call('GET', '/');
+		// $this->assertResponseOk();
+		$this->call('Post', 'tags');
+		$this->assertRedirectedToRoute('home', null, ['flash_message']);
 
-		$this->assertTrue($this->client->getResponse()->isOk());
+		// $crawler = $this->client->request('GET', '/');
+
+		// $this->assertTrue($this->client->getResponse()->isOk());
+	}
+
+	public function testIndex()
+	{
+		$this->call('GET', '/');
+		$this->assertViewHas('title');
 	}
 
 }

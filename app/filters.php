@@ -78,3 +78,23 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+
+Route::filter('country', function()
+{
+    
+	$country = Country::where('slug', Route::input('country'))->first();
+    if(  ! $country) {
+    	dd("We do not support this country");
+    }
+
+    Redirect::route('home');
+    
+});
+
+Route::filter('checkForm', function()
+{
+	if(Input::has('button2')) {
+		return Redirect::route('post2')->withInput();
+	} 
+});

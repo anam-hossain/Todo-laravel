@@ -94,7 +94,7 @@ This will allow you to use your registered alias like:
 Query Builder
 -------------
 
-The database driver plugs right into the original query builder. When using mongodb connections you will be able to build fluent queries to perform database operations. For your convenience, there is a `collection` alias for `table` as well as some additional mongodb specific operations like `push` and `pull`.
+The database driver plugs right into the original query builder. When using mongodb connections you will be able to build fluent queries to perform database operations. For your convenience, there is a `collection` alias for `table` as well as some additional mongodb specific operators/operations.
 
     // With custom connection
     $user = DB::connection('mongodb')->collection('users')->get();
@@ -236,6 +236,48 @@ You may also specify additional columns to update:
     User::where('age', '29')->increment('age', 1, array('group' => 'thirty something'));
     User::where('bmi', 30)->decrement('bmi', 1, array('category' => 'overweight'));
 
+### MongoDB specific operators
+
+**Exists**
+
+Matches documents that have the specified field.
+
+    User::where('age', 'exists', true)->get();
+
+**All**
+
+Matches arrays that contain all elements specified in the query.
+
+    User::where('roles', 'all', array('moderator', 'author'))->get();
+
+**Size**
+
+Selects documents if the array field is a specified size.
+
+    User::where('tags', 'size', 3)->get();
+
+**Regex**
+
+Selects documents where values match a specified regular expression.
+
+    User::where('name', 'regex', new MongoRegex("/.*doe/i"))->get();
+
+**Type**
+
+Selects documents if a field is of the specified type. For more information check: http://docs.mongodb.org/manual/reference/operator/query/type/#op._S_type
+
+    User::where('age', 'type', 2)->get();
+
+**Mod**
+
+Performs a modulo operation on the value of a field and selects documents with a specified result.
+
+    User::where('age', 'mod', array(10, 0))->get();
+
+**Where**
+
+Matches documents that satisfy a JavaScript expression. For more information check http://docs.mongodb.org/manual/reference/operator/query/where/#op._S_where
+
 ### Inserts, updates and deletes
 
 All basic insert, update, delete and select methods should be implemented.
@@ -267,8 +309,6 @@ Supported relations are:
  - belongsTo
  - belongsToMany
 
-*The belongsToMany relation will not use a pivot "table", but will push id's to a __related_ids__ attribute instead.*
-
 Example:
 
     use Jenssegers\Mongodb\Model as Eloquent;
@@ -291,6 +331,19 @@ And the inverse relation:
         public function user()
         {
             return $this->belongsTo('User');
+        }
+
+    }
+
+The belongsToMany relation will not use a pivot "table", but will push id's to a __related_ids__ attribute instead. This makes the second parameter for the belongsToMany method useless. If you want to define custom keys for your relation, set it to `null`:
+
+    use Jenssegers\Mongodb\Model as Eloquent;
+
+    class User extends Eloquent {
+
+        public function groups()
+        {
+            return $this->belongsToMany('Group', null, 'users', 'groups');
         }
 
     }
