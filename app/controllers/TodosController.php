@@ -10,7 +10,7 @@ class TodosController extends BaseController
 	 * [__construct description]
 	 * @param DbTodosRepository $todo [description]
 	 */
-	public function __construct(TodoRepositoryInterface $todo)
+	public function __construct(Todo $todo)
 	{
 		$this->todo = $todo;
 	}
@@ -23,9 +23,9 @@ class TodosController extends BaseController
 	{
 		
 		//dd(Carbon::now()->subMonth());
-		$title = "Todo Laravel - MongoDB";
+		$title = "Todo Laravel";
 
-		$todos = $this->todo->getAll();
+		$todos = $this->todo->all();
 
 		
 		//$todos->forget(2);
@@ -46,9 +46,9 @@ class TodosController extends BaseController
 
 	public function store()
 	{
-		$newTodo = $this->todo->store();
+		$newTodo = $this->todo->create(Input::only('todo'));
 
-		return Redirect::route('todos.index');
+		return Redirect::route('home');
 	}
 
 	public function destroy($id)
@@ -57,7 +57,7 @@ class TodosController extends BaseController
 		// delete a chunk
 		$todo = $this->todo->destroy($id);
 
-		return Redirect::route('todos.index');
+		return Redirect::route('home');
 	}
 
 	public function todoBind(Todo $todo)
