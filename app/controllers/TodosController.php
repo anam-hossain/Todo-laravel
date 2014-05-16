@@ -54,6 +54,7 @@ class TodosController extends BaseController
 	public function destroy($id)
 	{
 
+		// delete a chunk
 		$todo = $this->todo->destroy($id);
 
 		return Redirect::route('todos.index');
